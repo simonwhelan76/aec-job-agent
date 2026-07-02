@@ -33,11 +33,13 @@ for job in jobs:
         seen_jobs.append(job_id)
 
 save_seen_jobs(seen_jobs)
+print(f"Total jobs scraped: {len(jobs)}")
+print(f"New jobs found: {len(new_jobs)}")
 
-digest = """
+digest = f"""
 AEC Leadership Job Digest
 
-NEW JOBS FOUND
+Found {len(new_jobs)} new jobs
 
 """
 
