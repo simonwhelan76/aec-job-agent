@@ -1,3 +1,4 @@
+import os
 from scrapers.procore import get_jobs as get_procore_jobs
 from scrapers.aectechjobs import get_jobs as get_aectech_jobs
 from emailer import send_email
@@ -57,14 +58,19 @@ Link: {job['url']}
 
 print(digest)
 
-EMAIL = "swhelan.fpro@gmail.com"
-APP_PASSWORD = "fgpfhxfbbpfvwzyo"
+EMAIL = os.environ["GMAIL_USER"]
+
+APP_PASSWORD = os.environ["GMAIL_APP_PASSWORD"]
+
+EMAIL_TO = os.environ["EMAIL_TO"]
+
+print(f"Found {len(new_jobs)} new jobs")
 
 if new_jobs:
 
     send_email(
         EMAIL,
         APP_PASSWORD,
-        EMAIL,
+        EMAIL_TO,
         digest
     )
