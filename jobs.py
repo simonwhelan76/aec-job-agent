@@ -1,3 +1,4 @@
+print("SIMON TEST VERSION")
 import os
 from scrapers.procore import get_jobs as get_procore_jobs
 from scrapers.aectechjobs import get_jobs as get_aectech_jobs
