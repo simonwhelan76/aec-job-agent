@@ -1,15 +1,26 @@
 import smtplib
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 def send_email(sender, password, recipient, body):
 
-    msg = MIMEText(body)
+    message = MIMEMultipart()
 
-    msg["Subject"] = "AEC Leadership Job Digest"
-    msg["From"] = sender
-    msg["To"] = recipient
+    message["From"] = sender
+    message["To"] = recipient
+    message["Subject"] = "AEC Leadership Job Digest"
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(sender, password)
-        server.send_message(msg)
+    message.attach(MIMEText(body, "plain"))
+
+    with smtplib.SMTP_SSL(
+        "smtp.gmail.com",
+        465
+    ) as server:
+
+        server.login(
+            sender,
+            password
+        )
+
+        server.send_message(message)

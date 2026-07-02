@@ -1,17 +1,25 @@
 import json
-import os
 
-DATA_FILE = "jobs.json"
+FILE_NAME = "jobs_seen.json"
 
 
-def load_jobs():
-    if not os.path.exists(DATA_FILE):
+def load_seen_jobs():
+
+    try:
+        with open(FILE_NAME, "r") as f:
+            return json.load(f)
+
+    except:
+
         return []
 
-    with open(DATA_FILE, "r") as f:
-        return json.load(f)
 
+def save_seen_jobs(jobs):
 
-def save_jobs(jobs):
-    with open(DATA_FILE, "w") as f:
-        json.dump(jobs, f, indent=2)
+    with open(FILE_NAME, "w") as f:
+
+        json.dump(
+            jobs,
+            f,
+            indent=2
+        )
