@@ -68,9 +68,16 @@ print(f"Found {len(new_jobs)} new jobs")
 
 if new_jobs:
 
+    print("Attempting to send email")
+
     send_email(
         EMAIL,
         APP_PASSWORD,
         EMAIL_TO,
         digest
     )
+
+    print("EMAIL SENT")
+else:
+
+    print("No new jobs found")
