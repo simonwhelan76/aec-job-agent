@@ -66,9 +66,18 @@ EMAIL_TO = os.environ["EMAIL_TO"]
 
 print(f"Found {len(new_jobs)} new jobs")
 
-if new_jobs:
+print("About to load email settings")
 
-    print("Attempting to send email")
+EMAIL = os.environ["GMAIL_USER"]
+APP_PASSWORD = os.environ["GMAIL_APP_PASSWORD"]
+EMAIL_TO = os.environ["EMAIL_TO"]
+
+print("Email settings loaded")
+print(f"Sending to: {EMAIL_TO}")
+
+try:
+
+    print("Attempting email send")
 
     send_email(
         EMAIL,
@@ -77,7 +86,9 @@ if new_jobs:
         digest
     )
 
-    print("EMAIL SENT")
-else:
+    print("EMAIL SENT SUCCESSFULLY")
 
-    print("No new jobs found")
+except Exception as e:
+
+    print("EMAIL FAILED")
+    print(str(e))
