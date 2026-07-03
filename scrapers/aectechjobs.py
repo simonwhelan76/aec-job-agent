@@ -62,8 +62,34 @@ def get_jobs():
 
                 if any(k in title_lower for k in keywords):
 
+                    print(title)
+                    print(href)
+                    print("-" * 40)
+
+                    company = "Unknown"
+
+                    if href:
+
+                        slug = href.split("/job/")[-1].lower()
+
+                        if slug.startswith("bentley-systems"):
+                            company = "Bentley Systems"
+
+                        elif slug.startswith("twinmaster"): 
+                            company = "Twinmaster"
+
+                        elif slug.startswith("texture"):
+                            company = "Texture"
+
+                            company_part = slug.split("-product")[0]
+
+                            company = company_part.replace("--", " ")
+                            company = company.replace("-", " ")
+
+                            company = company.title()
+
                     jobs.append({
-                        "company": "AEC Tech Jobs",
+                        "company": company,
                         "title": title,
                         "url": href
                     })
