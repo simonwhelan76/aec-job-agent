@@ -23,6 +23,9 @@ def score_job(job):
     if "product owner" in title:
         score += 40
 
+    if "principal" in title:
+        score += 40
+
     if "product management" in title:
         score += 50
 
@@ -32,7 +35,7 @@ def score_job(job):
         score += 50
 
     if "strategy" in title:
-        score += 50
+        score += 75
 
     # Leadership
 

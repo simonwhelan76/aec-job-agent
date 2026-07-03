@@ -13,8 +13,8 @@ def get_jobs():
         "head",
         "vice president",
         "product management",
-        "strategist"
-        "forma"
+        "strategist",
+        "forma",
         "revit"
     ]
 
@@ -24,9 +24,13 @@ def get_jobs():
         "talent acquisition",
         "recruiter",
         "developer",
-        "engineer"
-        "tandem"
+        "engineer",
+        "tandem",
+        "ux",
+        "experience"
     ]
+
+    seen_urls = set()
 
     with sync_playwright() as p:
 
@@ -42,53 +46,61 @@ def get_jobs():
 
         page.wait_for_timeout(10000)
 
-        content = page.content()
-
-        if "director, forma industry strategy" in content.lower():
-            print("FORMA STRATEGY ROLE FOUND")
-        else:
-            print("FORMA STRATEGY ROLE NOT FOUND")
-
-        if "forma" in content.lower():
-            print("FORMA FOUND")
-
-        if "director, forma industry strategy" in content.lower():
-            print("FORMA STRATEGY ROLE FOUND")
-
-        links = page.locator("a")
-
-        count = links.count()
-
-        for i in range(count):
+        for page_num in range(1, 6):
 
             try:
 
-                title = links.nth(i).inner_text().strip()
+                page.get_by_role(
+                    "button",
+                    name=str(page_num)
+                ).click()
 
-                if not title:
-                    continue
+                page.wait_for_timeout(3000)
 
-                title_lower = title.lower()
+                links = page.locator("a")
 
-                if any(word in title_lower for word in exclude):
-                    continue
+                count = links.count()
 
-                if (
-                    any(word in title_lower for word in keywords)
-                    or "forma" in title_lower
-                    or "revit" in title_lower
-                ):
+                for i in range(count):
 
-                    href = links.nth(i).get_attribute("href")
+                    try:
 
-                    if href and href.startswith("/"):
-                        href = "https://autodesk.wd1.myworkdayjobs.com" + href
+                        title = links.nth(i).inner_text().strip()
 
-                    jobs.append({
-                        "company": "Autodesk",
-                        "title": title,
-                        "url": href
-                    })
+                        if not title:
+                            continue
+
+                        title_lower = title.lower()
+
+                        if any(word in title_lower for word in exclude):
+                            continue
+
+                        if (
+                            any(word in title_lower for word in keywords)
+                            or "forma" in title_lower
+                            or "revit" in title_lower
+                        ):
+
+                            href = links.nth(i).get_attribute("href")
+
+                            if href and href.startswith("/"):
+                                href = (
+                                    "https://autodesk.wd1.myworkdayjobs.com"
+                                    + href
+                                )
+
+                            if href and href not in seen_urls:
+
+                                seen_urls.add(href)
+
+                                jobs.append({
+                                    "company": "Autodesk",
+                                    "title": title,
+                                    "url": href
+                                })
+
+                    except:
+                        pass
 
             except:
                 pass
