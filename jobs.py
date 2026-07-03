@@ -1,6 +1,7 @@
 import os
 from scrapers.procore import get_jobs as get_procore_jobs
 from scrapers.aectechjobs import get_jobs as get_aectech_jobs
+from scrapers.autodesk import get_jobs as get_autodesk_jobs
 from emailer import send_email
 from scorer import score_job
 
@@ -13,6 +14,7 @@ jobs = []
 
 jobs.extend(get_procore_jobs())
 jobs.extend(get_aectech_jobs())
+jobs.extend(get_autodesk_jobs())
 
 seen_jobs = load_seen_jobs()
 
@@ -66,35 +68,41 @@ Company: {job['company']}
 
 print(digest)
 
-EMAIL = os.environ["GMAIL_USER"]
+EMAIL = os.environ.get("GMAIL_USER")
 
-APP_PASSWORD = os.environ["GMAIL_APP_PASSWORD"]
+APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")
 
-EMAIL_TO = os.environ["EMAIL_TO"]
+EMAIL_TO = os.environ.get("EMAIL_TO")
 
 print(f"Found {len(new_jobs)} new jobs")
 
 print("About to load email settings")
 
-EMAIL = os.environ["GMAIL_USER"]
-APP_PASSWORD = os.environ["GMAIL_APP_PASSWORD"]
-EMAIL_TO = os.environ["EMAIL_TO"]
+EMAIL = os.environ.get("GMAIL_USER")
+APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")
+EMAIL_TO = os.environ.get("EMAIL_TO")
 
 print("Email settings loaded")
-print(f"Sending to: {EMAIL_TO}")
 
 try:
 
-    print("Attempting email send")
+    if EMAIL and APP_PASSWORD and EMAIL_TO:
 
-    send_email(
-        EMAIL,
-        APP_PASSWORD,
-        EMAIL_TO,
-        digest
-    )
+        print(f"Sending to: {EMAIL_TO}")
+        print("Attempting email send")
 
-    print("EMAIL SENT SUCCESSFULLY")
+        send_email(
+            EMAIL,
+            APP_PASSWORD,
+            EMAIL_TO,
+            digest
+        )
+
+        print("EMAIL SENT SUCCESSFULLY")
+
+    else:
+
+        print("No email settings found. Skipping email.")
 
 except Exception as e:
 
