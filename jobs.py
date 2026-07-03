@@ -24,11 +24,7 @@ new_jobs = []
 
 for job in jobs:
 
-    job_id = (
-        job["company"]
-        + "|"
-        + job["title"]
-    )
+    job_id = job["url"]
 
     if job_id not in seen_jobs:
 
