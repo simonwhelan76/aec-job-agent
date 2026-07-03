@@ -1,45 +1,29 @@
-import requests
-from bs4 import BeautifulSoup
+from playwright.sync_api import sync_playwright
 
 
 def get_jobs():
 
-    url = "https://autodesk.wd1.myworkdayjobs.com/en-US/Ext"
-
-    response = requests.get(url)
-
-    soup = BeautifulSoup(response.text, "html.parser")
-
     jobs = []
 
-    keywords = [
-        "director",
-        "senior director",
-        "manager",
-        "senior manager",
-        "product",
-        "strategy",
-        "sustainability",
-        "head"
-    ]
+    with sync_playwright() as p:
 
-    for link in soup.find_all("a"):
+        browser = p.chromium.launch(headless=True)
 
-        title = link.get_text(strip=True)
+        page = browser.new_page()
 
-        href = link.get("href")
+        page.goto(
+            "https://autodesk.wd1.myworkdayjobs.com/Ext",
+            wait_until="domcontentloaded",
+            timeout=60000
+        )
 
-        if not title or not href:
-            continue
+        page.wait_for_timeout(10000)
 
-        title_lower = title.lower()
+        content = page.content()
 
-        if any(word in title_lower for word in keywords):
+        print("AUTODESK PAGE LOADED")
+        print("PAGE LENGTH:", len(content))
 
-            jobs.append({
-                "company": "Autodesk",
-                "title": title,
-                "url": href
-            })
+        browser.close()
 
     return jobs
