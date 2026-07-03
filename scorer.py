@@ -4,37 +4,34 @@ def score_job(job):
 
     title = job["title"].lower()
 
-    if "product" in title:
-        score += 20
+    if "principal product manager" in title:
+        score += 80
 
-    if "product manager" in title:
-        score += 30
-
-    if "principal" in title:
-        score += 40
-
-    if "director" in title:
+    elif "product manager" in title:
         score += 50
 
     if "strategy" in title:
-        score += 30
+        score += 40
+
+    if "director" in title:
+        score += 40
+
+    if "head" in title:
+        score += 40
 
     if "sustainability" in title:
         score += 30
 
-    if "head" in title:
-        score += 20
-
     if "aec" in title:
-        score += 40
+        score += 35
 
     if "engineering" in title:
-        score -= 15
-
-    if "investor" in title:
-        score -= 50
+        score -= 20
 
     if "designer" in title:
         score -= 50
+
+    if "investor" in title:
+        score -= 100
 
     return score
