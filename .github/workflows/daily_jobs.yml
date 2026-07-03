@@ -1,3 +1,5 @@
+# schedule active
+
 name: Daily Job Check
 
 on:
