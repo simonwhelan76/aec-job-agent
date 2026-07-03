@@ -11,10 +11,10 @@ def score_job(job):
         score += 30
 
     if "principal" in title:
-        score += 25
+        score += 40
 
     if "director" in title:
-        score += 30
+        score += 50
 
     if "strategy" in title:
         score += 30
