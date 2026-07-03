@@ -14,6 +14,8 @@ def get_jobs():
         "vice president",
         "product management",
         "strategist"
+        "forma"
+        "revit"
     ]
 
     exclude = [
@@ -23,6 +25,7 @@ def get_jobs():
         "recruiter",
         "developer",
         "engineer"
+        "tandem"
     ]
 
     with sync_playwright() as p:
@@ -38,6 +41,19 @@ def get_jobs():
         )
 
         page.wait_for_timeout(10000)
+
+        content = page.content()
+
+        if "director, forma industry strategy" in content.lower():
+            print("FORMA STRATEGY ROLE FOUND")
+        else:
+            print("FORMA STRATEGY ROLE NOT FOUND")
+
+        if "forma" in content.lower():
+            print("FORMA FOUND")
+
+        if "director, forma industry strategy" in content.lower():
+            print("FORMA STRATEGY ROLE FOUND")
 
         links = page.locator("a")
 
@@ -57,7 +73,11 @@ def get_jobs():
                 if any(word in title_lower for word in exclude):
                     continue
 
-                if any(word in title_lower for word in keywords):
+                if (
+                    any(word in title_lower for word in keywords)
+                    or "forma" in title_lower
+                    or "revit" in title_lower
+                ):
 
                     href = links.nth(i).get_attribute("href")
 

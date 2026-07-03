@@ -7,13 +7,10 @@ def score_job(job):
     # Autodesk ecosystem
 
     if "forma" in title:
-        score += 100
+        score += 120
 
     if "revit" in title:
-        score += 80
-
-    if "autodesk" in title:
-        score += 50
+        score += 100
 
     # Product leadership
 
@@ -35,7 +32,7 @@ def score_job(job):
         score += 50
 
     if "strategy" in title:
-        score += 40
+        score += 50
 
     # Leadership
 
@@ -43,7 +40,7 @@ def score_job(job):
         score += 60
 
     if "director" in title:
-        score += 40
+        score += 50
 
     if "head" in title:
         score += 40
