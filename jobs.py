@@ -2,6 +2,7 @@ import os
 from scrapers.procore import get_jobs as get_procore_jobs
 from scrapers.aectechjobs import get_jobs as get_aectech_jobs
 from scrapers.autodesk import get_jobs as get_autodesk_jobs
+from scrapers.bentley import get_jobs as get_bentley_jobs
 from emailer import send_email
 from scorer import score_job
 
@@ -15,6 +16,7 @@ jobs = []
 jobs.extend(get_procore_jobs())
 jobs.extend(get_aectech_jobs())
 jobs.extend(get_autodesk_jobs())
+jobs.extend(get_bentley_jobs())
 
 seen_jobs = load_seen_jobs()
 
