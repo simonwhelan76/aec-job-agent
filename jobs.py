@@ -33,6 +33,12 @@ for job in jobs:
         seen_jobs.append(job_id)
 
 save_seen_jobs(seen_jobs)
+
+new_jobs.sort(
+    key=score_job,
+    reverse=True
+)
+
 print(f"Total jobs scraped: {len(jobs)}")
 print(f"New jobs found: {len(new_jobs)}")
 
@@ -47,12 +53,12 @@ for job in new_jobs:
 
     score = score_job(job)
 
-    digest += f"""
-Score: {score}
+digest += f"""
+[{score}] {job['title']}
 
 Company: {job['company']}
-Title: {job['title']}
-Link: {job['url']}
+
+{job['url']}
 
 ----------------------------------------
 

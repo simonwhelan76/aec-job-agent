@@ -36,6 +36,21 @@ def get_jobs():
 
                 title_lower = title.lower()
 
+                exclude = [
+                    "designer",
+                    "design lead",
+                    "ux",
+                    "ui",
+                    "marketing",
+                    "sales",
+                    "recruiter",
+                    "finance",
+                    "investor"
+                ]
+
+                if any(word in title_lower for word in exclude):
+                    continue
+
                 keywords = [
                     "director",
                     "principal",

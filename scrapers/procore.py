@@ -29,17 +29,20 @@ def get_jobs():
     ]
 
     exclude = [
-        "designer",
-        "engineer",
-        "developer",
-        "marketing",
-        "support",
-        "recruiter",
-        "analyst",
-        "tax",
-        "account",
-        "account management",
-        "sales"
+    "designer",
+    "engineering manager",
+    "engineer",
+    "developer",
+    "marketing",
+    "support",
+    "recruiter",
+    "analyst",
+    "tax",
+    "account",
+    "account management",
+    "sales",
+    "investor",
+    "finance"
     ]
 
     for link in soup.find_all("a"):
