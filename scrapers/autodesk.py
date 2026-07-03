@@ -8,18 +8,21 @@ def get_jobs():
     keywords = [
         "product manager",
         "director",
-        "principal",
         "strategy",
         "product owner",
         "head",
-        "vice president"
+        "vice president",
+        "product management",
+        "strategist"
     ]
 
     exclude = [
         "designer",
         "marketing",
         "talent acquisition",
-        "recruiter"
+        "recruiter",
+        "developer",
+        "engineer"
     ]
 
     with sync_playwright() as p:
@@ -56,10 +59,15 @@ def get_jobs():
 
                 if any(word in title_lower for word in keywords):
 
+                    href = links.nth(i).get_attribute("href")
+
+                    if href and href.startswith("/"):
+                        href = "https://autodesk.wd1.myworkdayjobs.com" + href
+
                     jobs.append({
                         "company": "Autodesk",
                         "title": title,
-                        "url": "https://autodesk.wd1.myworkdayjobs.com/Ext"
+                        "url": href
                     })
 
             except:
