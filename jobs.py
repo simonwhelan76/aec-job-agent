@@ -53,7 +53,7 @@ for job in new_jobs:
 
     score = score_job(job)
 
-digest += f"""
+    digest += f"""
 [{score}] {job['title']}
 
 Company: {job['company']}
